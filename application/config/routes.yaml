@@ -1,0 +1,31 @@
+api.urls:
+  path: '/urls/{id}
+  methods: [GET]
+
+api.register:
+  path: '/users/{userId}/urls'
+  methods: [POST]
+
+api.stats:
+  path: '/stats'
+  methods: [GET]
+
+api.user.stats:
+  path: '/users/{userId}/stats'
+  methods: [GET]
+
+api.url.stats:
+  path: '/stats/{id}'
+  methods: [GET]
+
+api.delete:
+  path: '/urls/{id}'
+  methods: [DELETE]
+
+api.create.user:
+  path: '/users'
+  methods: [POST]
+
+api.delete.user:
+  path: '/user/{userId}'
+  methods: [DELETE]
