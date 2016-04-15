@@ -1,0 +1,3 @@
+parameters:
+  cache.path  : "%tmp%"
+  default.salt: 'awesome url shortener'

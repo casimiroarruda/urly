@@ -14,7 +14,8 @@
     "symfony/http-kernel": "^3.0",
     "symfony/proxy-manager-bridge": "^3.0",
     "symfony/yaml": "^3.0",
-    "symfony/routing": "^3.0"
+    "symfony/routing": "^3.0",
+    "monolog/monolog": "^1.19"
   },
   "require-dev": {
     "robmorgan/phinx": "0.5.*"

@@ -1,5 +1,7 @@
 api.urls:
-  path: '/urls/{id}
+  path: '/urls/{id}'
+  defaults: {command: 'Duodraco\UrlShortener\Context\Command\Url'}
+  requirements: { hash: '[[:alnum:]]+'}
   methods: [GET]
 
 api.register:

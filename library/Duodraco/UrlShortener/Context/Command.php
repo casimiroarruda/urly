@@ -1,5 +1,5 @@
 <?php
-namespace Duodraco\UrlShortener\Controller;
+namespace Duodraco\UrlShortener\Context;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,16 +10,10 @@ abstract class Command
     /** @var  Commandee */
     protected $commandee;
     
-    public function __construct(Container $container)
+    public final function __construct(Container $container)
     {
-        $this->commandee = $this->setupCommandee($container);
+        $this->commandee = new Commandee($container);
     }
-    
-    /**
-     * @param Container $container
-     * @return Commandee
-     */
-    abstract public function setupCommandee(Container $container);
 
     /**
      * @param Request $request

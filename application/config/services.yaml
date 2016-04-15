@@ -1,3 +1,29 @@
 services:
+  file.locator:
+    class: Symfony\Component\Config\FileLocator
+    arguments: ['%app.path%/config/']
   pdo:
-    class: \Pdo
+    class: PDO
+    arguments:
+      - "%pdo.dsn%"
+      - "%pdo.user%"
+      - "%pdo.pw%"
+      - "%pdo.options%"
+  pdoDriver:
+    class: Drakojn\Io\Driver\Pdo
+    arguments: ["@pdo"]
+    public: false
+    lazy: true
+  application.web:
+    class: Duodraco\UrlShortener\Services\Application
+    arguments: ["@service_container"]
+  logger.syslog.handler:
+    class: Monolog\Handler\ErrorLogHandler
+  app.logger:
+    class: Monolog\Logger
+    arguments: ['gaia']
+    calls:
+      - ['pushHandler', ["@logger.syslog.handler"]]
+  hasher:
+    class: Hashids\Hashids
+    arguments: ["%default.salt%"]
