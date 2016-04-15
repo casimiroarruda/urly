@@ -1,0 +1,21 @@
+<?php
+return [
+    "paths" => [
+        "migrations" => "build/migrations"
+    ],
+    "environments" => [
+        "default_migration_table" => "phinxlog",
+        "default_database" => "localhost",
+        "environments" => [
+            "localhost" => [
+                "adapter" => "mysql",
+                "host" => 'localhost',
+                "name" => 'urly_db',
+                "user" => 'urly_db_user',
+                "pass" => 'P@55w0rd!',
+                "port" => 3306,
+                "mysql_attr_init_command" => 'SET CHARACTER SET utf8'
+            ]
+        ]
+    ]
+];

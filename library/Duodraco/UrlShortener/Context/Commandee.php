@@ -2,6 +2,7 @@
 namespace Duodraco\UrlShortener\Context;
 
 use Drakojn\Io\Mapper;
+use Duodraco\UrlShortener\Data\Url;
 use Symfony\Component\DependencyInjection\Container;
 
 class Commandee
@@ -28,8 +29,17 @@ class Commandee
         return $this->container;
     }
 
-    public function getUrlById($id)
+    /**
+     * @param string $hash
+     * @return Url | bool (false)
+     * @throws \Exception
+     */
+    public function getUrlById($hash)
     {
-
+        $url = $this->container->get('mapper.url')->find(['hash' => $hash]);
+        if(!$url){
+            return false;
+        }
+        return current($url);
     }
 }

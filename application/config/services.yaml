@@ -27,3 +27,32 @@ services:
   hasher:
     class: Hashids\Hashids
     arguments: ["%default.salt%"]
+  map.url:
+    class: Drakojn\Io\Mapper\Map
+    public: false
+    arguments:
+      localName: Duodraco\UrlShortener\Data\Url
+      remoteName: url
+      identifier: id
+      properties:
+        id: id
+        hash: hash
+        url: url
+        userId: user_id
+        hits: hits
+  mapper.url:
+    class: Duodraco\UrlShortener\Services\Persistence
+    arguments: ["@pdoDriver", "@map.url"]
+  map.user:
+    class: Drakojn\Io\Mapper\Map
+    public: false
+    arguments:
+      localName: Duodraco\UrlShortener\Data\Url
+      remoteName: url
+      identifier: id
+      properties:
+        id: id
+        name: name
+  mapper.user:
+    class: Duodraco\UrlShortener\Services\Persistence
+    arguments: ["@pdoDriver", "@map.user"]
