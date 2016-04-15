@@ -5,7 +5,9 @@ api.urls:
   methods: [GET]
 
 api.register:
-  path: '/users/{userId}/urls'
+  path: '/users/{userid}/urls'
+  defaults: {command: 'Duodraco\UrlShortener\Context\Command\CreateUrl'}
+  requirements: { hash: '[[:alnum:]]+'}
   methods: [POST]
 
 api.stats:
@@ -26,6 +28,7 @@ api.delete:
 
 api.create.user:
   path: '/users'
+  defaults: {command: 'Duodraco\UrlShortener\Context\Command\CreateUser'}
   methods: [POST]
 
 api.delete.user:

@@ -38,21 +38,22 @@ services:
         id: id
         hash: hash
         url: url
-        userId: user_id
+        userHash: user_hash
         hits: hits
   mapper.url:
-    class: Duodraco\UrlShortener\Services\Persistence
+    class: Duodraco\UrlShortener\Services\Persistence\Mapper
     arguments: ["@pdoDriver", "@map.url"]
   map.user:
     class: Drakojn\Io\Mapper\Map
     public: false
     arguments:
-      localName: Duodraco\UrlShortener\Data\Url
-      remoteName: url
+      localName: Duodraco\UrlShortener\Data\User
+      remoteName: user
       identifier: id
       properties:
         id: id
-        name: name
+        hash: hash
+        alias: alias
   mapper.user:
-    class: Duodraco\UrlShortener\Services\Persistence
+    class: Duodraco\UrlShortener\Services\Persistence\Mapper
     arguments: ["@pdoDriver", "@map.user"]

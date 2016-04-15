@@ -6,6 +6,8 @@ class User
     /** @var  int */
     protected $id;
     /** @var  string */
+    protected $hash;
+    /** @var  string */
     protected $alias;
 
     /**
@@ -22,6 +24,22 @@ class User
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    /**
+     * @param string $hash
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
     }
 
     /**

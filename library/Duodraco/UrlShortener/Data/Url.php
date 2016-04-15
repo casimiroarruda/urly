@@ -9,10 +9,10 @@ class Url
     protected $hash;
     /** @var  string */
     protected $url;
+    /** @var  string */
+    protected $userHash;
     /** @var  int */
-    protected $userId;
-    /** @var  int */
-    protected $hits;
+    protected $hits = 0;
 
     /**
      * @return int
@@ -65,17 +65,17 @@ class Url
     /**
      * @return int
      */
-    public function getUserId()
+    public function getUserHash()
     {
-        return $this->userId;
+        return $this->userHash;
     }
 
     /**
-     * @param int $userId
+     * @param int $userHash
      */
-    public function setUserId($userId)
+    public function setUserHash($userHash)
     {
-        $this->userId = $userId;
+        $this->userHash = $userHash;
     }
 
     /**

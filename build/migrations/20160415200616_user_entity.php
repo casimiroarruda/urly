@@ -8,7 +8,9 @@ class UserEntity extends AbstractMigration
     {
         {
             $this->table('user')
-                ->addColumn('name','string',['limit'=>64,'null'=>false])
+                ->addColumn('hash', 'string', ['limit' => 64, 'null' => false])
+                ->addColumn('alias', 'string', ['limit' => 64, 'null' => true])
+                ->addIndex('hash')
                 ->create();
         }
     }
