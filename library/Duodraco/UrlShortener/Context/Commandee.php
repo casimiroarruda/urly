@@ -101,17 +101,36 @@ class Commandee
         $this->container->get('mapper.url')->save($url);
     }
 
-    public function getStats()
+    /**
+     * @param bool|string $hash
+     * @return array
+     * @throws \Exception
+     */
+    public function getStats($hash = false)
     {
         /** @var \PDO $pdo */
         $pdo = $this->container->get('pdo');
-        $row = $this->getGlobalStats($pdo);
-        $stats = [
-            "hits" => $row->hits,
-            "urlCount" => $row->urlCount
+        $filter = ['hash' => '', 'x' => 1];
+        if($hash){
+            $filter = ['hash' => $hash, 'x' => 0];
+        }
+        $row = $this->getGlobalStats($pdo, $filter);
+        $topTen = $this->getTopTen($pdo, $filter);
+        return $this->buildStats($row, $topTen);
+    }
+
+    /**
+     * @param \stdClass $statsObject
+     * @param array $topTen
+     * @return array
+     */
+    protected function buildStats(\stdClass $statsObject, array $topTen)
+    {
+        return [
+            "hits" => $statsObject->hits,
+            "urlCount" => $statsObject->urlCount,
+            "topUrls" => $topTen
         ];
-        $stats['topUrls'] = $this->getTopTen($pdo);
-        return $stats;
     }
 
     protected function getTopTen(\PDO $pdo, array $filter = ['hash' => '', 'x' => 1])
@@ -138,6 +157,17 @@ SQL;
         $statement = $pdo->prepare($sql);
         $statement->execute($filter);
         return $statement->fetchObject();
+    }
+
+    /**
+     * @param $hash
+     * @return bool|User
+     * @throws \Exception
+     */
+    public function getUser($hash)
+    {
+        $user = $this->container->get('mapper.user')->find(['hash' => $hash]);
+        return $user ? current($user) : false;
     }
 
     use HashingBehaviour;

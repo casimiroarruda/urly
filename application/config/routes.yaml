@@ -7,7 +7,7 @@ api.urls:
 api.register:
   path: '/users/{userid}/urls'
   defaults: {command: 'Duodraco\UrlShortener\Context\Command\CreateUrl'}
-  requirements: { hash: '[[:alnum:]]+'}
+  requirements: { userid: '[[:alnum:]]+'}
   methods: [POST]
 
 api.stats:
@@ -16,7 +16,9 @@ api.stats:
   methods: [GET]
 
 api.user.stats:
-  path: '/users/{userId}/stats'
+  path: '/users/{userid}/stats'
+  defaults: {command: 'Duodraco\UrlShortener\Context\Command\UserStats'}
+  requirements: { userid: '[[:alnum:]]+'}
   methods: [GET]
 
 api.url.stats:
