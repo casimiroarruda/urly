@@ -12,6 +12,7 @@ api.register:
 
 api.stats:
   path: '/stats'
+  defaults: {command: 'Duodraco\UrlShortener\Context\Command\Stats'}
   methods: [GET]
 
 api.user.stats:

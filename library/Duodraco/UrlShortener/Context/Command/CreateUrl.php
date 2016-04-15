@@ -23,7 +23,6 @@ class CreateUrl extends Command
         if (!$url) {
             return new Response('', 500);
         }
-        $stat = $this->commandee->buildStatFromUrl($url);
-        return new JsonResponse($stat, 201);
+        return new JsonResponse($url, 201);
     }
 }

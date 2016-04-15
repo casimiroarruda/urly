@@ -1,7 +1,7 @@
 <?php
 namespace Duodraco\UrlShortener\Data;
 
-class Url
+class Url implements \JsonSerializable
 {
     /** @var  int */
     protected $id;
@@ -90,4 +90,16 @@ class Url
     {
         $this->hits++;
     }
+
+    public function jsonSerialize()
+    {
+        $baseShortUrl = "http://{$_SERVER['HTTP_HOST']}/";
+        return (object)[
+            "id" => $this->getId(),
+            "hits" => $this->getHits(),
+            "url" => $this->getUrl(),
+            "shortUrl" => $baseShortUrl . $this->getHash()
+        ];
+    }
+
 }

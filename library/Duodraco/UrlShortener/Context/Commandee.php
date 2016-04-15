@@ -5,6 +5,7 @@ use Drakojn\Io\Mapper;
 use Duodraco\UrlShortener\Data\Url;
 use Duodraco\UrlShortener\Data\User;
 use Duodraco\UrlShortener\Services\String\HashingBehaviour;
+use PDO;
 use Psr\Log\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 
@@ -63,6 +64,12 @@ class Commandee
         return $sucess ? $user : false;
     }
 
+    /**
+     * @param $userHash
+     * @param $url
+     * @return bool|Url|void
+     * @throws \Exception
+     */
     public function createUrl($userHash, $url)
     {
         $userMapper = $this->container->get('mapper.user');
@@ -84,15 +91,53 @@ class Commandee
         return $urlMapper->save($urlObject) ? $urlObject : false;
     }
 
-    public function buildStatFromUrl(Url $url)
+    /**
+     * @param Url $url
+     * @throws \Exception
+     */
+    public function addHit(Url $url)
     {
-        $baseShortUrl = "http://{$_SERVER['HTTP_HOST']}/";
-        return (object)[
-            "id" => $url->getId(),
-            "hits" => $url->getHits(),
-            "url" => $url->getUrl(),
-            "shortUrl" => $baseShortUrl . $url->getHash()
+        $url->addHit();
+        $this->container->get('mapper.url')->save($url);
+    }
+
+    public function getStats()
+    {
+        /** @var \PDO $pdo */
+        $pdo = $this->container->get('pdo');
+        $row = $this->getGlobalStats($pdo);
+        $stats = [
+            "hits" => $row->hits,
+            "urlCount" => $row->urlCount
         ];
+        $stats['topUrls'] = $this->getTopTen($pdo);
+        return $stats;
+    }
+
+    protected function getTopTen(\PDO $pdo, array $filter = ['hash' => '', 'x' => 1])
+    {
+        $sql = <<<SQL
+SELECT id, hash, url, user_hash userHash, hits
+FROM url
+WHERE user_hash = :hash OR :x
+ORDER BY hits DESC 
+LIMIT 10
+SQL;
+        $statement = $pdo->prepare($sql);
+        $statement->execute($filter);
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'Duodraco\UrlShortener\Data\Url');
+        return $statement->fetchAll();
+    }
+
+    protected function getGlobalStats(\PDO $pdo, array $filter = ['hash' => '', 'x' => 1])
+    {
+        $sql = <<<SQL
+SELECT SUM(hits) hits, COUNT(id) urlCount FROM url
+WHERE user_hash = :hash OR :x;
+SQL;
+        $statement = $pdo->prepare($sql);
+        $statement->execute($filter);
+        return $statement->fetchObject();
     }
 
     use HashingBehaviour;

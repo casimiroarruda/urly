@@ -10,15 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Url extends Command
 {
-
-    /**
-     * @param Container $container
-     * @return Commandee
-     */
-    public function setupCommandee(Container $container)
-    {
-        $this->commandee = new Commandee($container);
-    }
+    /** @var  \Duodraco\UrlShortener\Data\Url */
+    protected $url;
 
     /**
      * @param Request $request
@@ -31,6 +24,14 @@ class Url extends Command
         if (!$url) {
             return new Response('Not Found', 404);
         }
+        $this->url = $url;
         return new RedirectResponse($url->getUrl(), 301);
+    }
+    public function __destruct()
+    {
+        if(!$this->url){
+            return;
+        }
+        $this->commandee->addHit($this->url);
     }
 }

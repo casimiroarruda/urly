@@ -11,15 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 class CreateUser extends Command
 {
     /**
-     * @param Container $container
-     * @return Commandee
-     */
-    public function setupCommandee(Container $container)
-    {
-        $this->commandee = new Commandee($container);
-    }
-
-    /**
      * @param Request $request
      * @param array $attributes
      * @return Response
