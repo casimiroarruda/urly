@@ -1,11 +1,11 @@
 <?php
-namespace Duodraco\UrlShortener\Context\Command;
+namespace Duodraco\Urly\Context\Command;
 
-use Duodraco\UrlShortener\Context\Command;
+use Duodraco\Urly\Context\Command;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DeleteUrl extends Command
+class DeleteUser extends Command
 {
 
     /**
@@ -15,11 +15,11 @@ class DeleteUrl extends Command
      */
     public function execute(Request $request, array $attributes = [])
     {
-        $url = $this->commandee->getUrl($attributes['id']);
-        if (!$url) {
+        $user = $this->commandee->getUser($attributes['userid']);
+        if (!$user) {
             return new Response('', 404);
         }
-        $code = $this->commandee->deleteUrl($url) ? 200 : 500;
+        $code = $this->commandee->deleteUser($user) ? 200 : 500;
         return new Response('', $code);
     }
 }

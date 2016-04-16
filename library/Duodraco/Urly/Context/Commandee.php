@@ -1,10 +1,10 @@
 <?php
-namespace Duodraco\UrlShortener\Context;
+namespace Duodraco\Urly\Context;
 
 use Drakojn\Io\Mapper;
-use Duodraco\UrlShortener\Data\Url;
-use Duodraco\UrlShortener\Data\User;
-use Duodraco\UrlShortener\Services\String\HashingBehaviour;
+use Duodraco\Urly\Data\Url;
+use Duodraco\Urly\Data\User;
+use Duodraco\Urly\Services\String\HashingBehaviour;
 use Psr\Log\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 
@@ -54,7 +54,6 @@ class Commandee
         $mapper = $this->container->get('mapper.user');
         if ($mapper->find(['hash' => $hash])) {
             throw new InvalidArgumentException('Duplicate!');
-            return false;
         }
         $user = new User();
         $user->setHash($hash);
@@ -76,7 +75,6 @@ class Commandee
         $user = $userMapper->find(['hash' => $userHash]);
         if (!$user) {
             throw new \InvalidArgumentException('User not found');
-            return;
         }
         $urlObject = new Url();
         $urlObject->setUrl($url);
@@ -148,12 +146,12 @@ LIMIT 10
 SQL;
         $statement = $pdo->prepare($sql);
         $statement->execute($filter);
-        $statement->setFetchMode(\PDO::FETCH_CLASS, 'Duodraco\UrlShortener\Data\Url');
+        $statement->setFetchMode(\PDO::FETCH_CLASS, 'Duodraco\Urly\Data\Url');
         return $statement->fetchAll();
     }
 
     /**
-     * @param PDO $pdo
+     * @param \PDO $pdo
      * @param array $filter
      * @return array
      */

@@ -15,7 +15,7 @@ services:
     public: false
     lazy: true
   application.web:
-    class: Duodraco\UrlShortener\Services\Application
+    class: Duodraco\Urly\Services\Application
     arguments: ["@service_container"]
   logger.syslog.handler:
     class: Monolog\Handler\ErrorLogHandler
@@ -31,7 +31,7 @@ services:
     class: Drakojn\Io\Mapper\Map
     public: false
     arguments:
-      localName: Duodraco\UrlShortener\Data\Url
+      localName: Duodraco\Urly\Data\Url
       remoteName: url
       identifier: id
       properties:
@@ -41,13 +41,13 @@ services:
         userHash: user_hash
         hits: hits
   mapper.url:
-    class: Duodraco\UrlShortener\Services\Persistence\Mapper
+    class: Duodraco\Urly\Services\Persistence\Mapper
     arguments: ["@pdoDriver", "@map.url"]
   map.user:
     class: Drakojn\Io\Mapper\Map
     public: false
     arguments:
-      localName: Duodraco\UrlShortener\Data\User
+      localName: Duodraco\Urly\Data\User
       remoteName: user
       identifier: id
       properties:
@@ -55,5 +55,5 @@ services:
         hash: hash
         alias: alias
   mapper.user:
-    class: Duodraco\UrlShortener\Services\Persistence\Mapper
+    class: Duodraco\Urly\Services\Persistence\Mapper
     arguments: ["@pdoDriver", "@map.user"]

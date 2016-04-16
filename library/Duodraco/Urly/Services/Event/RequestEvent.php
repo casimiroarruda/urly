@@ -1,5 +1,5 @@
 <?php
-namespace Duodraco\UrlShortener\Services\Event;
+namespace Duodraco\Urly\Services\Event;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\Event;

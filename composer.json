@@ -1,6 +1,6 @@
 {
-  "name": "duodraco/url-shortener",
-  "version": "0.0.1",
+  "name": "duodraco/urly",
+  "version": "0.5.0",
   "license": "MIT",
   "minimum-stability": "beta",
   "require": {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Duodraco\UrlShortener\Services;
+namespace Duodraco\Urly\Services;
 
 use Cekurte\Environment\Environment;
-use Duodraco\UrlShortener\Services\Event\RequestEvent;
+use Duodraco\Urly\Services\Event\RequestEvent;
 use Monolog\Logger;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -32,21 +32,10 @@ class Application implements HttpKernelInterface
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $router = false;
-        $cache = false;
-        if(class_exists('Memcache')){
-            $cache = new \Memcache;
-            $router = $cache->get('router.routes');
-        }
-        if (!$router) {
-            $locator = $this->container->get('file.locator');
-            $routesLoader = new YamlFileLoader($locator);
-            $router = new RouteCollection();
-            $router->addCollection($routesLoader->load('routes.yaml'));
-            if($cache){
-                $cache->set('router.routes', $router);
-            }
-        }
+        $locator = $this->container->get('file.locator');
+        $routesLoader = new YamlFileLoader($locator);
+        $router = new RouteCollection();
+        $router->addCollection($routesLoader->load('routes.yaml'));
         $this->routes = $router;
         $this->dispatcher = new EventDispatcher();
         self::$instance = $this;

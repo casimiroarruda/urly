@@ -1,5 +1,5 @@
 <?php
-namespace Duodraco\UrlShortener\Context;
+namespace Duodraco\Urly\Context;
 
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;

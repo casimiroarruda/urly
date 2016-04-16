@@ -1,45 +1,45 @@
 api.urls:
   path: '/urls/{id}'
-  defaults: {command: 'Duodraco\UrlShortener\Context\Command\Url'}
+  defaults: {command: 'Duodraco\Urly\Context\Command\Url'}
   requirements: { hash: '[[:alnum:]]+'}
   methods: [GET]
 
 api.register:
   path: '/users/{userid}/urls'
-  defaults: {command: 'Duodraco\UrlShortener\Context\Command\CreateUrl'}
+  defaults: {command: 'Duodraco\Urly\Context\Command\CreateUrl'}
   requirements: { userid: '[[:alnum:]]+'}
   methods: [POST]
 
 api.stats:
   path: '/stats'
-  defaults: {command: 'Duodraco\UrlShortener\Context\Command\Stats'}
+  defaults: {command: 'Duodraco\Urly\Context\Command\Stats'}
   methods: [GET]
 
 api.user.stats:
   path: '/users/{userid}/stats'
-  defaults: {command: 'Duodraco\UrlShortener\Context\Command\UserStats'}
+  defaults: {command: 'Duodraco\Urly\Context\Command\UserStats'}
   requirements: { userid: '[[:alnum:]]+'}
   methods: [GET]
 
 api.url.stats:
   path: '/stats/{id}'
-  defaults: {command: 'Duodraco\UrlShortener\Context\Command\UrlStats'}
+  defaults: {command: 'Duodraco\Urly\Context\Command\UrlStats'}
   requirements: { id: '[[:alnum:]]+'}
   methods: [GET]
 
 api.delete:
   path: '/urls/{id}'
-  defaults: {command: 'Duodraco\UrlShortener\Context\Command\DeleteUrl'}
+  defaults: {command: 'Duodraco\Urly\Context\Command\DeleteUrl'}
   requirements: { id: '[[:alnum:]]+'}
   methods: [DELETE]
 
 api.create.user:
   path: '/users'
-  defaults: {command: 'Duodraco\UrlShortener\Context\Command\CreateUser'}
+  defaults: {command: 'Duodraco\Urly\Context\Command\CreateUser'}
   methods: [POST]
 
 api.delete.user:
   path: '/user/{userid}'
-  defaults: {command: 'Duodraco\UrlShortener\Context\Command\DeleteUser'}
+  defaults: {command: 'Duodraco\Urly\Context\Command\DeleteUser'}
   requirements: { userid: '[[:alnum:]]+'}
   methods: [DELETE]

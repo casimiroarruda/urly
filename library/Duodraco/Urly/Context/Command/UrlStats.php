@@ -1,12 +1,12 @@
 <?php
-namespace Duodraco\UrlShortener\Context\Command;
+namespace Duodraco\Urly\Context\Command;
 
-use Duodraco\UrlShortener\Context\Command;
+use Duodraco\Urly\Context\Command;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Stats extends Command
+class UrlStats extends Command
 {
     /**
      * @param Request $request
@@ -15,7 +15,10 @@ class Stats extends Command
      */
     public function execute(Request $request, array $attributes = [])
     {
-        $stats = $this->commandee->getStats();
-        return new JsonResponse($stats);
+        $url = $this->commandee->getUrl($attributes['id']);
+        if (!$url) {
+            return new Response('', 404);
+        }
+        return new JsonResponse($url);
     }
 }

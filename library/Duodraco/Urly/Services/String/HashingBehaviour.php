@@ -1,5 +1,5 @@
 <?php
-namespace Duodraco\UrlShortener\Services\String;
+namespace Duodraco\Urly\Services\String;
 
 use Hashids\Hashids;
 

@@ -1,5 +1,5 @@
 <?php
-namespace Duodraco\UrlShortener\Data;
+namespace Duodraco\Urly\Data;
 
 class User
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Duodraco\UrlShortener\Services\Persistence;
+namespace Duodraco\Urly\Services\Persistence;
 
 use Drakojn\Io\Mapper as DrakojnMapper;
 
