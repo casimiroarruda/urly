@@ -5,7 +5,6 @@ use Drakojn\Io\Mapper;
 use Duodraco\UrlShortener\Data\Url;
 use Duodraco\UrlShortener\Data\User;
 use Duodraco\UrlShortener\Services\String\HashingBehaviour;
-use PDO;
 use Psr\Log\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Container;
 
@@ -133,6 +132,11 @@ class Commandee
         ];
     }
 
+    /**
+     * @param PDO $pdo
+     * @param array $filter
+     * @return array
+     */
     protected function getTopTen(\PDO $pdo, array $filter = ['hash' => '', 'x' => 1])
     {
         $sql = <<<SQL
@@ -144,10 +148,15 @@ LIMIT 10
 SQL;
         $statement = $pdo->prepare($sql);
         $statement->execute($filter);
-        $statement->setFetchMode(PDO::FETCH_CLASS, 'Duodraco\UrlShortener\Data\Url');
+        $statement->setFetchMode(\PDO::FETCH_CLASS, 'Duodraco\UrlShortener\Data\Url');
         return $statement->fetchAll();
     }
 
+    /**
+     * @param PDO $pdo
+     * @param array $filter
+     * @return array
+     */
     protected function getGlobalStats(\PDO $pdo, array $filter = ['hash' => '', 'x' => 1])
     {
         $sql = <<<SQL
@@ -160,7 +169,7 @@ SQL;
     }
 
     /**
-     * @param $hash
+     * @param string $hash
      * @return bool|User
      * @throws \Exception
      */
@@ -170,15 +179,35 @@ SQL;
         return $user ? current($user) : false;
     }
 
+    /**
+     * @param string $hash
+     * @return Url | bool
+     * @throws \Exception
+     */
     public function getUrl($hash)
     {
         $url = $this->container->get('mapper.url')->find(['hash' => $hash]);
         return $url ? current($url) : false;
     }
 
+    /**
+     * @param Url $url
+     * @return bool
+     * @throws \Exception
+     */
     public function deleteUrl(Url $url)
     {
         return $this->container->get('mapper.url')->delete($url);
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     * @throws \Exception
+     */
+    public function deleteUser(User $user)
+    {
+        return $this->container->get('mapper.user')->delete($user);
     }
 
     use HashingBehaviour;

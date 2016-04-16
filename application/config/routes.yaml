@@ -39,5 +39,7 @@ api.create.user:
   methods: [POST]
 
 api.delete.user:
-  path: '/user/{userId}'
+  path: '/user/{userid}'
+  defaults: {command: 'Duodraco\UrlShortener\Context\Command\DeleteUser'}
+  requirements: { userid: '[[:alnum:]]+'}
   methods: [DELETE]
