@@ -170,5 +170,11 @@ SQL;
         return $user ? current($user) : false;
     }
 
+    public function getUrl($hash)
+    {
+        $url = $this->container->get('mapper.url')->find(['hash' => $hash]);
+        return $url ? current($url) : false;
+    }
+
     use HashingBehaviour;
 }

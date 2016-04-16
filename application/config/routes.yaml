@@ -23,6 +23,8 @@ api.user.stats:
 
 api.url.stats:
   path: '/stats/{id}'
+  defaults: {command: 'Duodraco\UrlShortener\Context\Command\UrlStats'}
+  requirements: { id: '[[:alnum:]]+'}
   methods: [GET]
 
 api.delete:
