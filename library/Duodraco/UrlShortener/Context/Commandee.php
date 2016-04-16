@@ -111,7 +111,7 @@ class Commandee
         /** @var \PDO $pdo */
         $pdo = $this->container->get('pdo');
         $filter = ['hash' => '', 'x' => 1];
-        if($hash){
+        if ($hash) {
             $filter = ['hash' => $hash, 'x' => 0];
         }
         $row = $this->getGlobalStats($pdo, $filter);
@@ -174,6 +174,11 @@ SQL;
     {
         $url = $this->container->get('mapper.url')->find(['hash' => $hash]);
         return $url ? current($url) : false;
+    }
+
+    public function deleteUrl(Url $url)
+    {
+        return $this->container->get('mapper.url')->delete($url);
     }
 
     use HashingBehaviour;

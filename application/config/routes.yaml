@@ -29,6 +29,8 @@ api.url.stats:
 
 api.delete:
   path: '/urls/{id}'
+  defaults: {command: 'Duodraco\UrlShortener\Context\Command\DeleteUrl'}
+  requirements: { id: '[[:alnum:]]+'}
   methods: [DELETE]
 
 api.create.user:
